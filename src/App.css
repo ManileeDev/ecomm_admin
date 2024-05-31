@@ -1,38 +1,152 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: poppins;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  background-color: #33398a;
+  color: whitesmoke;
+  padding: 0.5rem 1.2rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.logo{
+  font-size: 1.2rem;
+  font-weight: 500;
+  font-style: italic;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.home-container{
+  padding-top: 1.3rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container{
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0.5rem;
+  gap: 20px;
+  width: 150px;
+  border: 1px solid rgba(0,0,0,0.6);
+  border-radius: 10px;
+}
+
+.image-wrapper  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+}
+
+
+
+.image-wrapper img {
+  width: 100%;
+}
+
+.image-wrapper img:hover{
+  width: 120px;
+  transition: ease-in 0.2s;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.loginpage {
+  width: 70%;
+}
+.login-box {
+  background-color: white;
+  border-radius: 5px;
+  padding: 1.5rem;
+}
+
+.password {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgb(207, 207, 207);
+  border-radius: 5px;
+  padding: 3px 0rem;
+}
+
+/* .password::-moz-focus-inner{
+  border-color: #1e8cfa;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 106, 255, 0.6);
+} */
+
+.password > input {
+  border: none;
+  outline: none;
+  width: 90%;
+  padding-left: 0.5rem;
+  cursor: text;
+}
+
+/* .password input:focus{
+  border-color: #1e8cfa;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 106, 255, 0.6);
+} */
+
+.pass-logo {
+  font-size: large;
+  cursor: pointer;
+}
+
+.main-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url("https://img.freepik.com/premium-vector/shopping-doodle-outline-seamless-pattern-background-vector-illustration_7087-2895.jpg?size=626&ext=jpg&ga=GA1.1.1334965056.1689834116&semt=ais");
+}
+
+
+.creation-form{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 1.2rem;
+  margin-top: 2rem;
+  border: 1px solid rgb(207, 207, 207);
+}
+
+.creation-form form {
+  margin: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+
+.creation-form > form > input{
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #33398a;
+  border-radius: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.custom{
+  border: 1px solid #33398a;
+  border-radius: 5px;
+  color: grey;
 }
+
