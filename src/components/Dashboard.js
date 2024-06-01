@@ -29,9 +29,8 @@ export default function Dashboard() {
                 "Authorization": "Bearer " + JSON.parse(localStorage.getItem("token"))
             }
         })
-        console.log(response)
+        console.log(response.data)
     }
-    console.log(users)
     return (
         <div>
             <Navbar />
@@ -47,8 +46,8 @@ export default function Dashboard() {
 
                 {view === "users" && <><h3>Users</h3>
                     {users && users.map((user, index) => {
-                        return <div className='d-flex'>
-                        <div key={index} style={{width: "70%"}}>{index + 1}.{user.fullname}</div><button onClick={()=>deleteUser(user.user.Id)}></button></div>
+                        return <div className='d-flex'  key={index} >
+                        <div style={{width: "70%"}}>{index + 1}.{user.fullname}</div><button onClick={()=>deleteUser(user.userId)}>test</button></div>
                     })}</>}
 
             </div>
