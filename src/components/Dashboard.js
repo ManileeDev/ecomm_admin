@@ -14,7 +14,7 @@ export default function Dashboard() {
     }
 
     const fetchUsers = async () => {
-        const response = await axios.get("http://localhost:4500/api/getallusers", {
+        const response = await axios.get("https://ecomm-backend-z1w5.onrender.com/api/getallusers", {
             headers: {
                 "Authorization": "Bearer " + JSON.parse(localStorage.getItem("token"))
             }
