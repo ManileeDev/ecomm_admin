@@ -15,21 +15,20 @@ export default function Home() {
                     <p>Add</p>
                 </div>
                 </Link>
-                
-                <Link to="/login">
-                <div className="image-container">
-                    <div className="image-wrapper">
-                        <img src='../../assets/delete.png' alt='delete' />
-                    </div>
-                    <p>Delete</p>
 
-                </div></Link>
+                <Link to="/dashboard">
                 <div className="image-container">
                     <div className="image-wrapper">
                         <img src='../../assets/info.png' alt='info' />
                     </div>
                     <p>Info</p>
-
+                </div>
+                </Link>
+                <div className="image-container">
+                    <div className="image-wrapper">
+                        <img src='../../assets/delete.png' alt='delete' />
+                    </div>
+                    <p>Delete</p>
                 </div>
                 <div className="image-container">
                     <div className="image-wrapper">

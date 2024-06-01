@@ -1,45 +1,51 @@
 import React, { useState } from 'react'
 import Navbar from './Navbar'
 import axios from 'axios'
+import toast, { Toaster } from 'react-hot-toast'
 
 export default function AddProd() {
     const [product, setProduct] = useState({
         name: "", price: "",category:"", seller: "", stock: "",image1: "",image2:"",image3:""
     })
 
-     const changeHandler = (e) => {
+    const categories = ["Footwear","Clothing","Laptops","Mobiles","Watches","Others"]
+
+    const changeHandler = (e) => {
         
         setProduct({ ...product, [e.target.name]: e.target.value })
     }
 
-    const categories = ["Footwear","Clothing","Laptops","Mobiles","Watches","Others"]
     
-    const images = [];
-    images.push(product.image1);
-    images.push(product.image2);
-    images.push(product.image3);
+    
+    const images = [product.image1,product.image2,product.image3];
   
     const data = {...product,images}
     
-    const handleSubmit = () => {
-        console.log(product)
+    const handleSubmit = (e) => {
+        e.preventDefault();
         axios.post("https://ecomm-backend-z1w5.onrender.com/api/createproduct",data,{
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("token")
+                "Authorization": "Bearer " + JSON.parse(localStorage.getItem("token"))
             }    
         }).then(res => {
-            console.log(res.data)
+            if(res.data.status === "Success"){
+                toast.success("Product added successfully")
+                setProduct({name:"",price:"",category:"",seller:"",stock:"",image1:"",image2:"",image3:""})
+                document.getElementById("productForm").reset();
+            }
+            else{
+                toast.error("Something went wrong")
+            }
         })
         .catch(err => console.log(err))
     }
-    
 return (
     <>
         <Navbar />
         <div className='creation-form'>
 
-            <form onSubmit={e => e.preventDefault()}>
+            <form id="productForm" onSubmit={handleSubmit}>
                 <h5>Add Product</h5>
                 <input type="text" name="name" placeholder='Product Name' onChange={changeHandler} />
                 <input type="text" name="price" placeholder='Price' onChange={changeHandler} />
@@ -51,9 +57,10 @@ return (
                 </select>
                 <input type="text" name="seller" placeholder='Seller' onChange={changeHandler} />
                 <input type="text" name="stock" placeholder='Stock' onChange={changeHandler} />
-                <button type="submit" className='btn btn-success' onClick={handleSubmit}>Add Product</button>
+                <button type="submit" className='btn btn-success'>Add Product</button>
             </form>
         </div>
+        <Toaster/>
     </>
 
 )

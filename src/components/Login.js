@@ -50,17 +50,15 @@ export default function Login() {
           }
           if (checkBoxValue) {
               localStorage.setItem('user', JSON.stringify(responseData.user))
-              localStorage.setItem('token', responseData.token)
+              localStorage.setItem('token', JSON.stringify(responseData.token))
           }
           dispatch({ type: 'LOGIN', payload: responseData.user })
       }
       setError(responseData.message)
+      toast.error(error)
   }
   catch (e) {
       console.log(e.message)
-  }
-  finally{
-      
   }
  
   };
