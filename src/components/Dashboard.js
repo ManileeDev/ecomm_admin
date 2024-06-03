@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import Navbar from './Navbar'
 import axios from 'axios'
+import { MdDelete } from "react-icons/md";
+import toast, { Toaster } from 'react-hot-toast';
+import { useEffect } from 'react';
 
 export default function Dashboard() {
 
     const [products, setProducts] = useState([])
     const [users, setUsers] = useState([])
+    const [error,setError] = useState("")
     const [view, setView] = useState("")
     const fetchProducts = async () => {
         const response = await axios.get("https://ecomm-backend-z1w5.onrender.com/api/products")
@@ -24,13 +28,28 @@ export default function Dashboard() {
     }
 
     const deleteUser = async (id) => {
-        const response = await axios.delete(`https://ecomm-backend-z1w5.onrender.com/api/deleteuser/${id}`, {
+
+        try{
+            const response = await axios.delete(`https://ecomm-backend-z1w5.onrender.com/api/deleteuser/${id}`, {
             headers: {
                 "Authorization": "Bearer " + JSON.parse(localStorage.getItem("token"))
             }
         })
         console.log(response.data)
+        }
+        catch(err){
+            setError(err.response.data.message)
+        }
+        
+       
     }
+
+    useEffect(() => {
+        if(error){
+            toast.error(error)
+            setError("")
+        }
+    }, [error]) 
     return (
         <div>
             <Navbar />
@@ -47,10 +66,11 @@ export default function Dashboard() {
                 {view === "users" && <><h3>Users</h3>
                     {users && users.map((user, index) => {
                         return <div className='d-flex'  key={index} >
-                        <div style={{width: "70%"}}>{index + 1}.{user.fullname}</div><button onClick={()=>deleteUser(user.userId)}>test</button></div>
-                    })}</>}
+                        <div style={{width: "70%"}}>{index + 1}.{user.fullname}</div><span className='text-danger' btn-sm onClick={()=>deleteUser(user.userId)}><MdDelete/></span></div>
+                    })}</>}'
 
             </div>
+            <Toaster/>
         </div>
     )
 }

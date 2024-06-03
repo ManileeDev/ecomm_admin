@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { IoMdEyeOff } from "react-icons/io";
 import toast, { Toaster } from 'react-hot-toast'
@@ -45,7 +45,6 @@ export default function Login() {
       console.log()
       if (response.ok) {
           if(responseData.user.role !== "admin"){
-            toast.error("You are not admin")
             return setError("You are not admin")
           }
           if (checkBoxValue) {
@@ -55,7 +54,6 @@ export default function Login() {
           dispatch({ type: 'LOGIN', payload: responseData.user })
       }
       setError(responseData.message)
-      toast.error(error)
   }
   catch (e) {
       console.log(e.message)
@@ -63,6 +61,11 @@ export default function Login() {
  
   };
 
+  useEffect(() => {
+    if(error){
+      toast.error(error)
+    }
+}, [error])
   return (
     <div className="main-background">
       <div className="loginpage">
