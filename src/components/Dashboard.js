@@ -2,20 +2,29 @@ import React, { useState } from 'react'
 import Navbar from './Navbar'
 import axios from 'axios'
 import { MdDelete } from "react-icons/md";
+import { MdModeEdit } from "react-icons/md";
 import toast, { Toaster } from 'react-hot-toast';
 import { useEffect } from 'react';
+import DataTable from "react-data-table-component"
 
 export default function Dashboard() {
 
     const [products, setProducts] = useState([])
     const [users, setUsers] = useState([])
-    const [error,setError] = useState("")
+    const [error, setError] = useState("")
     const [view, setView] = useState("")
     const fetchProducts = async () => {
         const response = await axios.get("https://ecomm-backend-z1w5.onrender.com/api/products")
         setProducts(response.data.products)
         setView("products")
+        setRecords(response.data.products)
     }
+
+    // const datas = [...products]
+
+
+
+    const [records, setRecords] = useState()
 
     const fetchUsers = async () => {
         const response = await axios.get("https://ecomm-backend-z1w5.onrender.com/api/getallusers", {
@@ -29,48 +38,114 @@ export default function Dashboard() {
 
     const deleteUser = async (id) => {
 
-        try{
+        try {
             const response = await axios.delete(`https://ecomm-backend-z1w5.onrender.com/api/deleteuser/${id}`, {
-            headers: {
-                "Authorization": "Bearer " + JSON.parse(localStorage.getItem("token"))
+                headers: {
+                    "Authorization": "Bearer " + JSON.parse(localStorage.getItem("token"))
+                }
+            })
+            if (response.data.message == "User Deleted Successfully") {
+                toast.success(response.data.message)
+                fetchUsers()
             }
-        })
-        console.log(response.data)
         }
-        catch(err){
+        catch (err) {
             setError(err.response.data.message)
         }
-        
-       
+
+
     }
 
     useEffect(() => {
-        if(error){
+        if (error) {
             toast.error(error)
             setError("")
         }
-    }, [error]) 
+    }, [error])
+
+
+    const deleteProduct = async (id) => {
+        try {
+            const response = await axios.delete(`https://ecomm-backend-z1w5.onrender.com/api/deleteproduct/${id}`, {
+                headers: {
+                    "Authorization": "Bearer " + JSON.parse(localStorage.getItem("token"))
+                }
+            })
+            if(response.data.status =='Product Deleted'){
+                toast.success(response.data.status)
+                fetchProducts()
+            }
+            }
+        catch (err) {
+            setError(err.response.data.message)
+        }
+
+    }
+    const updateProduct = (id) => {
+        console.log(id)
+    }
+
+    const productColumns = [{
+        name: "Name",
+        selector: row => row.name,
+        sortable: true
+    }, {
+        name: "Image",
+        selector: row => <img src={row.images[0]} alt="" style={{ width: "50px", height: '50px', margin: "5px", objectFit: "contain" }} />,
+    },
+    {
+        name: "Price",
+        selector: row => row.price,
+    },
+    {
+        name: "Action",
+        selector: row => <> <span className='text-danger' onClick={() => deleteProduct(row._id)}><MdDelete /></span> <span className='text-danger' onClick={() => updateProduct(row._id)}><MdModeEdit /></span></>
+    }
+    ]
+
+    const usersColumn = [{
+        name: "Name",
+        selector: row => row.fullname,
+        sortable: true
+    },
+    {
+        name: "Phone",
+        selector: row => row.phone,
+    },
+    {
+        name: "Action",
+        selector: row => <span className='text-danger' onClick={() => deleteUser(row.userId)}><MdDelete /></span>
+    }
+    ]
+
+    const handleFilter = (e) => {
+        const filteredData = products.filter(row => {
+            return row.name.toLowerCase().includes(e.target.value.toLowerCase())
+        })
+        setRecords(filteredData)
+    }
+
+
     return (
         <div>
             <Navbar />
             <div className="dashboard-control">
-                <button className="btn btn-outline-success"onClick={fetchProducts}>Fetch Products</button>
+                <button className="btn btn-outline-success" onClick={fetchProducts}>Fetch Products</button>
                 <button className='btn btn-outline-danger' onClick={fetchUsers}>Fetch Users</button>
             </div>
             <div className="dashboard-container">
-                {view === "products" && <><h3>Products</h3>
-                    {products && products.map((product, index) => {
-                        return <p key={index}>{index + 1}.{product.name}</p>
-                    })}</>}
+                {view === "products" &&
+                    <>
+                        <input type='text' className='form-control' onChange={handleFilter} />
+                        <DataTable columns={productColumns} data={records} pagination fixedHeader /></>
 
-                {view === "users" && <><h3>Users</h3>
-                    {users && users.map((user, index) => {
-                        return <div className='d-flex'  key={index} >
-                        <div style={{width: "70%"}}>{index + 1}.{user.fullname}</div><span className='text-danger' btn-sm onClick={()=>deleteUser(user.userId)}><MdDelete/></span></div>
-                    })}</>}'
+                }
+
+                {view === "users" && <>
+                    <DataTable columns={usersColumn} data={users} pagination fixedHeader /></>}
 
             </div>
-            <Toaster/>
+            <Toaster />
         </div>
     )
 }

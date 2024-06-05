@@ -24,12 +24,15 @@ export default function Home() {
                     <p>Info</p>
                 </div>
                 </Link>
+                <Link to="/delete"> 
                 <div className="image-container">
                     <div className="image-wrapper">
                         <img src='../../assets/delete.png' alt='delete' />
                     </div>
                     <p>Delete</p>
                 </div>
+                </Link>
+                <Link to="/edit"> 
                 <div className="image-container">
                     <div className="image-wrapper">
                         <img src='../../assets/edit.png' alt='edit' />
@@ -37,6 +40,8 @@ export default function Home() {
                     <p>Edit</p>
 
                 </div>
+                </Link>
+                <Link to="/soon"> 
                 <div className="image-container">
                     <div className="image-wrapper">
                         <img src='../../assets/new.png' alt='new' />
@@ -44,6 +49,7 @@ export default function Home() {
                     <p>Soon</p>
 
                 </div>
+                </Link>
 
             </div>
         </>
