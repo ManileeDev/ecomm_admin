@@ -12,6 +12,7 @@ export default function AddProd() {
 
     const changeHandler = (e) => {
         
+        
         setProduct({ ...product, [e.target.name]: e.target.value })
     }
 

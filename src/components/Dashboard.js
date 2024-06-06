@@ -6,6 +6,7 @@ import { MdModeEdit } from "react-icons/md";
 import toast, { Toaster } from 'react-hot-toast';
 import { useEffect } from 'react';
 import DataTable from "react-data-table-component"
+import EditProd from './EditProd';
 
 export default function Dashboard() {
 
@@ -13,6 +14,7 @@ export default function Dashboard() {
     const [users, setUsers] = useState([])
     const [error, setError] = useState("")
     const [view, setView] = useState("")
+    const [show,setShow] = useState(false)
     const fetchProducts = async () => {
         const response = await axios.get("https://ecomm-backend-z1w5.onrender.com/api/products")
         setProducts(response.data.products)
@@ -20,10 +22,13 @@ export default function Dashboard() {
         setRecords(response.data.products)
     }
 
-    // const datas = [...products]
+    const [editProd,setEditProd] = useState(null)
 
-
-
+    const handleEdit = (id) => {
+        const selectedProduct = products.find(product => product._id == id)
+        setEditProd(selectedProduct)
+        setShow(true)
+    }
     const [records, setRecords] = useState()
 
     const fetchUsers = async () => {
@@ -36,6 +41,14 @@ export default function Dashboard() {
         setView("users")
     }
 
+    const confirmUserDelete = (id) => {
+        let text = "DO YOU WANT TO DELETE?";
+        if (window.confirm(text) == true) {
+          deleteUser(id);
+        } else {
+          toast.error("Deletion Failed");
+        }
+      }
     const deleteUser = async (id) => {
 
         try {
@@ -63,7 +76,15 @@ export default function Dashboard() {
         }
     }, [error])
 
-
+     
+    const confirmProductDelete = (id) => {
+        let text = "DO YOU WANT TO DELETE?";
+        if (window.confirm(text) == true) {
+          deleteProduct(id);
+        } else {
+          toast.error("Deletion Failed");
+        }
+      }
     const deleteProduct = async (id) => {
         try {
             const response = await axios.delete(`https://ecomm-backend-z1w5.onrender.com/api/deleteproduct/${id}`, {
@@ -81,9 +102,6 @@ export default function Dashboard() {
         }
 
     }
-    const updateProduct = (id) => {
-        console.log(id)
-    }
 
     const productColumns = [{
         name: "Name",
@@ -99,7 +117,7 @@ export default function Dashboard() {
     },
     {
         name: "Action",
-        selector: row => <> <span className='text-danger' onClick={() => deleteProduct(row._id)}><MdDelete /></span> <span className='text-danger' onClick={() => updateProduct(row._id)}><MdModeEdit /></span></>
+        selector: row => <> <span className='text-danger' onClick={() => confirmProductDelete(row._id)}><MdDelete /></span> <span className='text-danger' onClick={()=>handleEdit(row._id)}><MdModeEdit /></span></>
     }
     ]
 
@@ -114,7 +132,7 @@ export default function Dashboard() {
     },
     {
         name: "Action",
-        selector: row => <span className='text-danger' onClick={() => deleteUser(row.userId)}><MdDelete /></span>
+        selector: row => <span className='text-danger' onClick={() => confirmUserDelete(row.userId)}><MdDelete /></span>
     }
     ]
 
@@ -124,7 +142,6 @@ export default function Dashboard() {
         })
         setRecords(filteredData)
     }
-
 
     return (
         <div>
@@ -145,6 +162,7 @@ export default function Dashboard() {
                     <DataTable columns={usersColumn} data={users} pagination fixedHeader /></>}
 
             </div>
+            {show && <EditProd product ={editProd} show={show} closeModal={()=>setShow(false)}/>}
             <Toaster />
         </div>
     )
