@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import toast, { Toaster } from 'react-hot-toast';
-import { RxCross2 } from "react-icons/rx";
+import { RxCross2 } from "react-icons/rx"; 
 
 export default function EditProd({ product,show, closeModal }) {
 
@@ -10,9 +10,10 @@ export default function EditProd({ product,show, closeModal }) {
         name: product.name, price: product.price,category:product.category, seller: product.seller, stock: product.stock,image1: product.images[0],image2:product.images[1],image3:product.images[2]
     })
     const id = product._id;
-    const images = [product.image1,product.image2,product.image3];
+    console.log(id)
+    const images = [edit.image1,edit.image2,edit.image3];
   
-    const data = {...product,images}
+    const data = {...edit,images}
     const changeHandler = (e) => {   
         SetEdit({ ...edit, [e.target.name]: e.target.value })
     }

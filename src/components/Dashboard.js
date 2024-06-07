@@ -143,6 +143,10 @@ export default function Dashboard() {
         setRecords(filteredData)
     }
 
+    const closeModal = () => {
+        setShow(false);
+        fetchProducts();
+    }
     return (
         <div>
             <Navbar />
@@ -162,7 +166,7 @@ export default function Dashboard() {
                     <DataTable columns={usersColumn} data={users} pagination fixedHeader /></>}
 
             </div>
-            {show && <EditProd product ={editProd} show={show} closeModal={()=>setShow(false)}/>}
+            {show && <EditProd product ={editProd} show={show} closeModal={closeModal} /> }
             <Toaster />
         </div>
     )
