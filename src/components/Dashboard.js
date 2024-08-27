@@ -16,7 +16,7 @@ export default function Dashboard() {
     const [view, setView] = useState("")
     const [show,setShow] = useState(false)
     const fetchProducts = async () => {
-        const response = await axios.get("https://ecomm-backend-z1w5.onrender.com/api/products")
+        const response = await axios.get("https://vaa3ernrnomwlgmbzfveeyyqpi0cvjau.lambda-url.us-east-1.on.aws/api/products")
         setProducts(response.data.products)
         setView("products")
         setRecords(response.data.products)
@@ -32,7 +32,7 @@ export default function Dashboard() {
     const [records, setRecords] = useState()
 
     const fetchUsers = async () => {
-        const response = await axios.get("https://ecomm-backend-z1w5.onrender.com/api/getallusers", {
+        const response = await axios.get("https://vaa3ernrnomwlgmbzfveeyyqpi0cvjau.lambda-url.us-east-1.on.aws/api/getallusers", {
             headers: {
                 "Authorization": "Bearer " + JSON.parse(localStorage.getItem("token"))
             }
@@ -52,7 +52,7 @@ export default function Dashboard() {
     const deleteUser = async (id) => {
 
         try {
-            const response = await axios.delete(`https://ecomm-backend-z1w5.onrender.com/api/deleteuser/${id}`, {
+            const response = await axios.delete(`https://vaa3ernrnomwlgmbzfveeyyqpi0cvjau.lambda-url.us-east-1.on.aws/api/deleteuser/${id}`, {
                 headers: {
                     "Authorization": "Bearer " + JSON.parse(localStorage.getItem("token"))
                 }
@@ -87,7 +87,7 @@ export default function Dashboard() {
       }
     const deleteProduct = async (id) => {
         try {
-            const response = await axios.delete(`https://ecomm-backend-z1w5.onrender.com/api/deleteproduct/${id}`, {
+            const response = await axios.delete(`https://vaa3ernrnomwlgmbzfveeyyqpi0cvjau.lambda-url.us-east-1.on.aws/api/deleteproduct/${id}`, {
                 headers: {
                     "Authorization": "Bearer " + JSON.parse(localStorage.getItem("token"))
                 }
