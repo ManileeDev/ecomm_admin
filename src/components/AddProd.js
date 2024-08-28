@@ -24,7 +24,7 @@ export default function AddProd() {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post("https://vaa3ernrnomwlgmbzfveeyyqpi0cvjau.lambda-url.us-east-1.on.aws/api/createproduct",data,{
+        axios.post("https://server-seven-red.vercel.app/api/createproduct",data,{
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + JSON.parse(localStorage.getItem("token"))

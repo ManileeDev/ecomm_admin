@@ -20,7 +20,7 @@ export default function EditProd({ product,show, closeModal }) {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.put(`https://vaa3ernrnomwlgmbzfveeyyqpi0cvjau.lambda-url.us-east-1.on.aws/api/updateproduct/${id}`,data,{
+        axios.put(`https://server-seven-red.vercel.app/api/updateproduct/${id}`,data,{
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + JSON.parse(localStorage.getItem("token"))
